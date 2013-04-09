@@ -76,3 +76,26 @@ function list_dir($dirname) {
 	}
 	return $ret;
 }
+
+/**
+ * 递归删除目录及所有子目录和文件
+ * 改进PHP原生函数rmdir()
+ * 1.判断目录是否存在，存在进行删除。
+ * 2.递归删除目录及止内所有文件和文件夹
+ *
+ * @param string $dirname
+ */
+function del_dir($dirname) {
+	if (is_dir($dirname)) {
+		if (($dh = @opendir($dirname)) !== false) {
+			while (false !== ($file = readdir($dh))) {
+				if ($file != "." && $file != "..") {
+					$path = $dirname . '/' . $file;
+					is_dir($path) ? del_dir($path) : @unlink($path);
+				}
+			}
+			closedir($dh);
+		}
+		rmdir($dirname);
+	}
+}
