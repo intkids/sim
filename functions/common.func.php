@@ -55,3 +55,24 @@ function make_dir($pathname, $mode = null) {
 	return realpath($pathname);
 }
 
+/**
+ * 递归列出目录下的所有目录和文件
+ *
+ * @param string $dirname
+ * @return array 不是目录或目录打开失败返回空数组
+ */
+function list_dir($dirname) {
+	$ret = array();
+	if (is_dir($dirname)) {
+		if (($dh = @opendir($dirname)) !== false) {
+			while (false !== ($file = readdir($dh))) {
+				if ($file != "." && $file != "..") {
+					$path = $dirname . '/' . $file;
+					is_dir($path) ? $ret[$file] = list_dir($path) : $ret[] = $file;
+				}
+			}
+			closedir($dh);
+		}
+	}
+	return $ret;
+}
