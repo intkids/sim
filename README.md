@@ -1,8 +1,6 @@
 Sim
 ======
 
-Sim,a library of one function and some classes to simplify our PHP development.
-
 Sim，means simple and simplify, simple code simplify our PHP development.
 Including one function library and a series of class libraries.
 
