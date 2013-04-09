@@ -6,3 +6,14 @@
  * @since 2013/04/10
  */
 
+/**
+ * 是否合法变量名
+ * 规定合法变量名为：字母或下划线开头，后跟字母、数字、下划线、短杠。
+ * 不能使用汉字等双字节字符。
+ *
+ * @param string $var
+ * @return boolean
+ */
+function is_var($var) {
+	return !!preg_match('/^[a-z_][a-z0-9-_]*$/i', $var);
+}
