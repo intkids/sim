@@ -1,4 +1,4 @@
 sim
 ===
 
-Functions and classes to simplify our PHP.
+A library of some functions and classes to simplify our PHP development.
