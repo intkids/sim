@@ -40,3 +40,18 @@ function is_real_string($string) {
 function is_empty($var) {
 	return empty($var) && $var !== 0 && $var !== "0";
 }
+
+/**
+ * 创建目录
+ * 1.支持多层目录的创建（>PHP5）
+ * 2.自动识别目录是否存在
+ *
+ * @param string $pathname 目录名
+ * @param int $mode 模式，默认为0777
+ * @return string 返回规范化的绝对路径名
+ */
+function make_dir($pathname, $mode = null) {
+	is_dir($pathname) or mkdir($pathname, $mode, true);
+	return realpath($pathname);
+}
+
