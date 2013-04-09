@@ -27,3 +27,16 @@ function is_var($var) {
 function is_real_string($string) {
 	return is_string($string) && strlen($string) > 0;
 }
+
+/**
+ * 是否非空
+ * 和PHP原生函数的区别在于
+ * 1.empty()认为0和"0"为空，返回TRUE
+ * 2.本函数认为非空，返回FALSE
+ *
+ * @param mixed $var 待检测变量
+ * @return boolean 为空返回TRUE，否则返回FALSE
+ */
+function is_empty($var) {
+	return empty($var) && $var !== 0 && $var !== "0";
+}
