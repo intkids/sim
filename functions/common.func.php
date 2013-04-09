@@ -17,3 +17,13 @@
 function is_var($var) {
 	return !!preg_match('/^[a-z_][a-z0-9-_]*$/i', $var);
 }
+
+/**
+ * 是否非空字符串
+ *
+ * @param string $string
+ * @return boolean
+ */
+function is_real_string($string) {
+	return is_string($string) && strlen($string) > 0;
+}
