@@ -99,3 +99,28 @@ function del_dir($dirname) {
 		rmdir($dirname);
 	}
 }
+
+/**
+ * 字符串文件操作（读、写、删）
+ * 1.$data为NULL：读取文件，返回string
+ * 2.$data为FALSE：删除文件，返回boolean
+ * 3.$data为string：写入文件，返回number
+ *
+ * @param string|integer $filename
+ * @param mixed|false|null $data
+ * @return string boolean number
+ */
+function str_file($filename, $data = null) {
+	if (is_scalar($filename)) {
+		if (is_null($data)) {
+			return is_file($filename) ? @file_get_contents($filename) : null;
+		} elseif (false === $data) {
+			return is_file($filename) ? unlink($filename) : false;
+		} else {
+			return file_put_contents($filename, $data);
+		}
+	}
+	return false;
+}
+
+
