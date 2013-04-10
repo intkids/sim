@@ -126,7 +126,8 @@ function strfile($filename, $data = null) {
 		} elseif (false === $data) {
 			return is_file($filename) ? unlink($filename) : false;
 		} else {
-			make_dir(dirname($filename));
+			$dirname = dirname($filename);
+			is_dir($dirname) or mkdir($dirname, 0777, true);
 			return file_put_contents($filename, $data);
 		}
 	}
@@ -134,30 +135,35 @@ function strfile($filename, $data = null) {
 }
 
 /**
- * 数组文件操作（读、写、删）
- * 1.$data为NULL：读取文件，返回array
- * 2.$data为FALSE：删除文件，返回boolean
- * 3.$data为array：写入文件，返回array
+ * 数组配置文件操作（读、写、删）
+ * 1.获取返回数组式文件：$filename为string，$array为null。返回array，不存在或不是返回数组式文件，返回空数组。
+ * 2.生成返回数组式文件：$filename为string，$array为array。返回array。
+ * 3.删除文件：$filename为string，$array为false。返回boolean。
  *
- * @param string|integer $filename
- * @param mixed|false|null $data
+ * @param string $filename
+ * @param array|null $array
  * @return array boolean
  */
-function arrfile($filename, $data = null) {
+function arrfile($filename, $array = null) {
 	if (is_scalar($filename)) {
-		if (is_null($data)) {
-			is_file($filename) && $data = @file_get_contents($filename);
-			empty($data) or $data = unserialize($data);
-			return empty($data) ? array() : $data;
-		} elseif (false === $data) {
+		if (is_null($array)) {
+			// 1.获取本地返回数组式文件：$filename为string，$array为null。不存在或不是数组文件，返回空数组。
+			is_file($filename) && $ret = include ($filename);
+			return isset($ret) && is_array($ret) ? $ret : array();
+		} elseif (is_array($array)) {
+			// 2.生成返回数组式文件：$filename为string，$array为array。
+			$data = "<?php\nreturn " . var_export($array, true) . ';';
+			// 自动创建目录
+			$dirname = dirname($filename);
+			is_dir($dirname) or mkdir($dirname, 0777, true);
+			file_put_contents($filename, $data);
+			return $array;
+		} elseif ($array === false) {
+			// 3.删除文件：$filename为string，$array为false。
 			return is_file($filename) ? unlink($filename) : false;
-		} else {
-			make_dir(dirname($filename));
-			return file_put_contents($filename, serialize($data));
 		}
 	}
 	return false;
 }
-
 
 
