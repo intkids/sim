@@ -7,6 +7,14 @@
  */
 
 /**
+ * 规范函数命名规则
+ * 1.判断类函数（is函数）：以"is_"开头，如is_var()、is_empty()。
+ * 2.获取类函数（get函数）：以"get_"开头，如get_ip()、get_url()。
+ * 3.设置类函数（set函数）：以"set_"开头，如set_name()、set_age()。
+ * 4.其它动作类函数：动词 + "_" + 名词
+ */
+
+/**
  * 是否合法变量名
  * 规定合法变量名为：字母或下划线开头，后跟字母、数字、下划线、短杠。
  * 不能使用汉字等双字节字符。
@@ -110,7 +118,7 @@ function del_dir($dirname) {
  * @param mixed|false|null $data
  * @return string boolean number
  */
-function str_file($filename, $data = null) {
+function strfile($filename, $data = null) {
 	if (is_scalar($filename)) {
 		if (is_null($data)) {
 			return is_file($filename) ? @file_get_contents($filename) : null;
