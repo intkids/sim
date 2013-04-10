@@ -126,6 +126,7 @@ function strfile($filename, $data = null) {
 		} elseif (false === $data) {
 			return is_file($filename) ? unlink($filename) : false;
 		} else {
+			make_dir(dirname($filename));
 			return file_put_contents($filename, $data);
 		}
 	}
@@ -151,6 +152,7 @@ function arrfile($filename, $data = null) {
 		} elseif (false === $data) {
 			return is_file($filename) ? unlink($filename) : false;
 		} else {
+			make_dir(dirname($filename));
 			return file_put_contents($filename, serialize($data));
 		}
 	}
