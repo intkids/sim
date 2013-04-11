@@ -26,11 +26,11 @@ class SimAuthCode {
 	private $ini = array(
 			'length' => 4,
 			'type' => 0,
-			'width' => 100,
+			'width' => 80,
 			'height' => 24,
 			'fontsize' => 14,
 			'fontfile' => 'arial.ttf',
-			'disturb' => 10 
+			'disturb' => 8 
 	);
 	
 	/**
@@ -39,6 +39,13 @@ class SimAuthCode {
 	 * @var integer
 	 */
 	const ANGLE_MAX = 30;
+	
+	/**
+	 * 字体与边的间隔
+	 *
+	 * @var integer
+	 */
+	const PADDING = 5;
 	
 	/**
 	 * 图像资源句柄
@@ -84,9 +91,12 @@ class SimAuthCode {
 	 *
 	 * @access public
 	 */
-	public function output($session_name=null) {
+	public function output($session_name = null) {
 		$this->createText()->imageBackground()->imageText()->imageDisturb();
-		empty($session_name) or $_SESSION[$session_name] = $this->getCode();
+		if (!is_null($session_name)){
+			isset($_SESSION) or session_start();
+			$_SESSION[$session_name] = $this->getCode();
+		}
 		header("Content-type:image/png");
 		imagepng($this->im);
 		imagedestroy($this->im);
@@ -147,14 +157,14 @@ class SimAuthCode {
 	private function imageText() {
 		$count = strlen($this->text);
 		$text = str_split($this->text);
-		$width = $this->ini['width'] / $count;
+		$width = ($this->ini['width'] - 2 * self::PADDING) / $count;
 		$height = $this->ini['height'];
 		foreach ($text as $k => $char) {
 			$angle = rand(-self::ANGLE_MAX, self::ANGLE_MAX);
 			$fontsize = $this->ini['fontsize'];
 			$fontfile = $this->ini['fontfile'];
 			$box = $this->getBox($fontsize, $angle, $fontfile, $char);
-			$x = $k * $width + ($width - $box['w']) / 2;
+			$x = $k * $width + ($width - $box['w']) / 2 + self::PADDING;
 			$y = $height - ($height - $box['h']) / 2;
 			$color = imagecolorallocate($this->im, rand(0, 140), rand(0, 140), rand(0, 140));
 			imagettftext($this->im, $fontsize, $angle, $x, $height / 1.4, $color, $fontfile, $char);
