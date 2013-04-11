@@ -30,7 +30,7 @@ class SimAuthCode {
 			'height' => 24,
 			'fontsize' => 14,
 			'fontfile' => 'arial.ttf',
-			'disturb' => 8 
+			'disturb' => 10 
 	);
 	
 	/**
