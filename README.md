@@ -1,6 +1,6 @@
 # Sim
 ---
-#### Sim, simplify our PHP development, including base function and a series of classes.
+#### Sim, simplify our PHP development, including one basic function and a series of classes.
 
 #### 使用简单、简洁的代码，简化我们的PHP开发。
 
