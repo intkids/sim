@@ -166,4 +166,30 @@ function arrfile($filename, $array = null) {
 	return false;
 }
 
-
+/**
+ * Cookie操作，设置、读取、删除
+ * 1.设置：$value为非null且非false，用法：cookie('key', 'value')
+ * 2.读取：$value为null，用法：cookie('key')
+ * 3.删除：$value为false，用法：cookie('key', false)
+ *
+ * @param string $name 名字
+ * @param mixed $value 值
+ * @param number $expire 有效期
+ * @param string|null $path 路径
+ * @param string|null $domain 域名
+ * @param boolean $secure 是否通过安全的HTTPS连接传输
+ * @return mixed
+ */
+function cookie($name, $value = null, $expire = null, $path = null, $domain = null, $secure = false) {
+	if (!empty($name)) {
+		if (is_null($value)) {
+			return isset($_COOKIE[$name]) ? $_COOKIE[$name] : null;
+		} elseif ($value === false) {
+			return setcookie($name, '', time() - 1);
+		} else {
+			$expire = empty($expire) ? 0 : (time() + intval($expire));
+			return setcookie($name, $value, $expire, $path, $domain, $secure);
+		}
+	}
+	return false;
+}
