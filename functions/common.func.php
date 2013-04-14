@@ -267,15 +267,14 @@ function radix($number, $to = 62, $from = 10) {
  * @return string
  */
 function dec_to($num, $to = 62) {
-	$to = intval($to);
 	if ($to == 10 || $to > 62 || $to < 2) {
 		return $num;
 	}
 	$dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$ret = '';
 	do {
-		$ret = $dict[$num % $to] . $ret;
-		$num = floor($num / $to);
+		$ret = $dict[bcmod($num, $to)] . $ret;
+		$num = bcdiv($num, $to);
 	} while ($num > 0);
 	return $ret;
 }
@@ -301,7 +300,7 @@ function dec_from($num, $from = 62) {
 		if ($pos >= $from) {
 			continue;
 		}
-		$dec += pow($from, $len - $i - 1) * $pos;
+		$dec = bcadd(bcmul(bcpow($from, $len - $i - 1), $pos), $dec);
 	}
 	return $dec;
 }
@@ -317,8 +316,8 @@ function to62($num) {
 	$dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$ret = '';
 	do {
-		$ret = $dict[$num % $to] . $ret;
-		$num = floor($num / $to);
+		$ret = $dict[bcmod($num, $to)] . $ret;
+		$num = bcdiv($num, $to);
 	} while ($num > 0);
 	return $ret;
 }
@@ -327,9 +326,9 @@ function to62($num) {
  * 62进制数转换成十进制数
  *
  * @param string $num
- * @return number
+ * @return string
  */
-function from62($num, $from = 62) {
+function from62($num) {
 	$from = 62;
 	$num = strval($num);
 	$dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -337,7 +336,7 @@ function from62($num, $from = 62) {
 	$dec = 0;
 	for($i = 0; $i < $len; $i++) {
 		$pos = strpos($dict, $num[$i]);
-		$dec += pow($from, $len - $i - 1) * $pos;
+		$dec = bcadd(bcmul(bcpow($from, $len - $i - 1), $pos), $dec);
 	}
 	return $dec;
 }
