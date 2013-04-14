@@ -193,3 +193,51 @@ function cookie($name, $value = null, $expire = null, $path = null, $domain = nu
 	}
 	return false;
 }
+
+/**
+ * 输出常见HTTP状态信息
+ *
+ * @param integer $code 状态码
+ */
+function send_http_status($code) {
+	$status = array(
+			200 => 'OK',
+			301 => 'Moved Permanently',
+			302 => 'Moved Temporarily ',
+			400 => 'Bad Request',
+			401 => 'Unauthorized',
+			403 => 'Forbidden',
+			404 => 'Not Found',
+			500 => 'Internal Server Error',
+			503 => 'Service Unavailable' 
+	);
+	$str = isset($status[$code]) ? (' ' . $status[$code]) : '';
+	header("HTTP/1.1 $code$str");
+}
+
+/**
+ * 获取随机字符串
+ * 词典类型说明：
+ * 0：数字+小写字母+大写字母-形近易混淆的字符
+ * 1：数字
+ * 2：小写字母
+ * 3：大写字母
+ * 4：小写字母+大写字母
+ * 5：数字+小写字母+大写字母
+ *
+ * @param integer $length 字符串长度
+ * @param integer $dict 词典类型，默认为5
+ * @return string
+ */
+function get_rand_string($length, $dict = 5) {
+	$dicts = array(
+			'2345678abcdefghjkmnprstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ',
+			'0123456789',
+			'abcdefghijklmnopqrstuvwxyz',
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+			'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+			'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' 
+	);
+	$dict = isset($dicts[$dict]) ? $dicts[$dict] : $dicts[0];
+	return substr(str_shuffle($dict), 0, $length);
+}

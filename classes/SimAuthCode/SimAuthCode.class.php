@@ -6,7 +6,6 @@
  * @author 雨中歌者 http://weibo.com/esinger (新浪微博)
  * @link http://blog.csdn.net/esinger (技术博客)
  * @license http://www.apache.org/licenses/LICENSE-2.0
- * @since 2013/04/10
  */
 
 /**
@@ -22,7 +21,6 @@
  *
  * @author 雨中歌者
  * @version 1.0
- * @since 2013-4-11
  */
 class SimAuthCode {
 	/**

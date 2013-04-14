@@ -14,7 +14,7 @@
 > 4. height:验证码图像高度，默认24px，用法：`set('height', 30)`  
 > 5. fontsize:字体大小，默认14，用法：`set('fontsize', 18)`  
 > 6. fontfile:字体文件，默认arial.ttf，用法：`set('fontfile', 'msyh.ttf')`  
-> 7. disturb:干扰元素密度，默认为10，用法：`set('disturb', 8)`
+> 7. disturb:干扰强度，默认为10，用法：`set('disturb', 8)`
 
 ##### 二、 output($session_name=null) 输出验证码图像  
 可选参数$session_name为设置验证码值的SESSION的键名，如果指定此参数，则自动设置SESSION值。
