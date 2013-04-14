@@ -74,6 +74,20 @@ class SimAuthCode {
 	private $text;
 	
 	/**
+	 * 验证码字典
+	 *
+	 * @var array
+	 */
+	private $dicts = array(
+			0 => '2345678abcdefghjkmnprstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ',
+			1 => '0123456789',
+			2 => 'abcdefghijklmnopqrstuvwxyz',
+			3 => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+			4 => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+			5 => '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' 
+	);
+	
+	/**
 	 * 构造函数
 	 */
 	public function __construct() {
@@ -85,10 +99,8 @@ class SimAuthCode {
 	 * 2.$name为array，参数键值对数组，如 set(array('name'=>'value'))
 	 *
 	 * @access public
-	 * @param string|array $name
-	 *        	参数键名或键值对数组
-	 * @param mixed|null $value
-	 *        	参数值
+	 * @param string|array $name 参数键名或键值对数组
+	 * @param mixed|null $value 参数值
 	 * @return SimAuthCode
 	 */
 	public function set($name, $value = null) {
@@ -117,7 +129,7 @@ class SimAuthCode {
 	}
 	
 	/**
-	 * 获取验证码
+	 * 获取验证码文本
 	 *
 	 * @access public
 	 * @return string
@@ -127,21 +139,13 @@ class SimAuthCode {
 	}
 	
 	/**
-	 * 取得验证码字符
+	 * 生成验证码字符
 	 *
 	 * @access private
 	 * @return SimAuthCode
 	 */
 	private function createText() {
-		$dicts = array(
-				'2345678abcdefghjkmnprstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ',
-				'0123456789',
-				'abcdefghijklmnopqrstuvwxyz',
-				'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-				'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-				'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' 
-		);
-		$dict = isset($dicts[$this->ini['type']]) ? $dicts[$this->ini['type']] : $dicts[0];
+		$dict = isset($this->dicts[$this->ini['type']]) ? $this->dicts[$this->ini['type']] : $this->dicts[0];
 		$text = substr(str_shuffle($dict), 0, $this->ini['length']);
 		$this->text = $text;
 		return $this;
@@ -213,10 +217,10 @@ class SimAuthCode {
 	 * 获取字符长和宽
 	 *
 	 * @access private
-	 * @param integer $fontsize        	
-	 * @param integer $angle        	
-	 * @param string $fontfile        	
-	 * @param string $text        	
+	 * @param integer $fontsize
+	 * @param integer $angle
+	 * @param string $fontfile
+	 * @param string $text
 	 * @return array
 	 */
 	private function getBox($fontsize, $angle, $fontfile, $text) {
