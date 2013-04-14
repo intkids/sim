@@ -241,3 +241,103 @@ function get_rand_string($length, $dict = 5) {
 	$dict = isset($dicts[$dict]) ? $dicts[$dict] : $dicts[0];
 	return substr(str_shuffle($dict), 0, $length);
 }
+
+/**
+ * 数字的任意进制转换
+ *
+ * @param integer|string $number
+ * @param integer $to 目标进制数
+ * @param integer $from 源进制数
+ * @return string
+ */
+function radix($number, $to = 62, $from = 10) {
+	// 先转换成10进制
+	$number = dec_from($number, $from);
+	// 再转换成目标进制
+	$number = dec_to($number, $to);
+	return $number;
+}
+
+/**
+ * 十进制数转换成其它进制
+ * 可以转换成2-62任何进制
+ *
+ * @param integer $num
+ * @param integer $to
+ * @return string
+ */
+function dec_to($num, $to = 62) {
+	$to = intval($to);
+	if ($to == 10 || $to > 62 || $to < 2) {
+		return $num;
+	}
+	$dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$ret = '';
+	do {
+		$ret = $dict[$num % $to] . $ret;
+		$num = floor($num / $to);
+	} while ($num > 0);
+	return $ret;
+}
+
+/**
+ * 其它进制数转换成十进制数
+ * 适用2-62的任何进制
+ *
+ * @param string $num
+ * @param integer $from
+ * @return number
+ */
+function dec_from($num, $from = 62) {
+	if ($from == 10 || $from > 62 || $from < 2) {
+		return $num;
+	}
+	$num = strval($num);
+	$dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$len = strlen($num);
+	$dec = 0;
+	for($i = 0; $i < $len; $i++) {
+		$pos = strpos($dict, $num[$i]);
+		if ($pos >= $from) {
+			continue;
+		}
+		$dec += pow($from, $len - $i - 1) * $pos;
+	}
+	return $dec;
+}
+
+/**
+ * 十进制数转换成62进制
+ *
+ * @param integer $num
+ * @return string
+ */
+function to62($num) {
+	$to = 62;
+	$dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$ret = '';
+	do {
+		$ret = $dict[$num % $to] . $ret;
+		$num = floor($num / $to);
+	} while ($num > 0);
+	return $ret;
+}
+
+/**
+ * 62进制数转换成十进制数
+ *
+ * @param string $num
+ * @return number
+ */
+function from62($num, $from = 62) {
+	$from = 62;
+	$num = strval($num);
+	$dict = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$len = strlen($num);
+	$dec = 0;
+	for($i = 0; $i < $len; $i++) {
+		$pos = strpos($dict, $num[$i]);
+		$dec += pow($from, $len - $i - 1) * $pos;
+	}
+	return $dec;
+}
