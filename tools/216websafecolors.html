@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>216 web safe colors</title>
+		<meta name="keyword" content="安全色,网页安全色,216安全色" />
+		<meta name="description" content="216种网页安全色" />
+		<meta name="author" content="雨中歌者<http://weibo.com/esinger" />
+		<style type="text/css">
+			body {
+				font: 12px Consolas;
+				background: #EEEEEE;
+			}
+			#color-container {
+				width: 972px;
+				height: 1728px;
+				border: #09c solid 1px;
+				padding: 10px 0 0 10px;
+			}
+			dl, dt, dd {
+				margin: 0;
+				padding: 0;
+			}
+			dl {
+				width: 150px;
+				height: 36px;
+				float: left;
+				margin: 0 10px 10px 0;
+				border: solid 1px;
+			}
+			dt, dd {
+				height: 18px;
+				line-height: 18px;
+				width: 108px;
+				padding-left: 5px;
+				background: #FFFFFF;
+				float: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="color-container">
+			<script type="text/javascript">
+				var r = g = b = ['00', '33', '66', '99', 'CC', 'FF'];
+				function showColor() {
+					var str = '', i, j, k, hex;
+					for ( i = 0; i < 6; i++) {
+						for ( j = 0; j < 6; j++) {
+							for ( k = 0; k < 6; k++) {
+								hex = '#' + r[i] + g[j] + b[k];
+								rgb = parseInt('0X' + r[i]) + ' ' + parseInt('0X' + g[j]) + ' ' + parseInt('0X' + b[k]);
+								str += "<dl style='background:" + hex + "; border-color:" + hex + ";'><dt>HEX:" + hex + "</dt><dd>RGB:" + rgb + "</dd></dl>\n";
+							}
+						}
+					}
+					return str;
+				}
+				document.write(showColor());
+			</script>
+		</div>
+	</body>
+</html>

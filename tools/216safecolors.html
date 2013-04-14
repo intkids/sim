@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>216 web safe colors</title>
+		<meta name="keyword" content="安全色,网页安全色,216安全色" />
+		<meta name="description" content="216种网页安全色" />
+		<meta name="author" content="雨中歌者<http://weibo.com/esinger" />
+		<style type="text/css">
+			body {
+				font: 12px Consolas;
+				background: #EEEEEE;
+			}
+			#color-container {
+				width: 540px;
+				height: 1080px;
+				border: #09c solid 1px;
+				padding: 10px 0 0 10px;
+			}
+			ul,li {
+				margin: 0;
+				padding: 0;
+			}
+			ul {
+				width: 78px;
+				height: 18px;
+				float: left;
+				margin: 0 10px 10px 0;
+				border: solid 1px;
+			}
+			li {
+				height: 18px;
+				line-height: 18px;
+				width: 60px;
+				text-align:center;
+				background: #FFFFFF;
+				float: right;
+				list-style:none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="color-container">
+			<script type="text/javascript">
+				var r = g = b = ['00', '33', '66', '99', 'CC', 'FF'];
+				function showColor() {
+					var str = '', i, j, k, hex;
+					for ( i = 0; i < 6; i++) {
+						for ( j = 0; j < 6; j++) {
+							for ( k = 0; k < 6; k++) {
+								hex = '#' + r[i] + g[j] + b[k];
+								str += "<ul style='background:" + hex + "; border-color:" + hex + ";'><li>" + hex + "</li></ul>\n";
+							}
+						}
+					}
+					return str;
+				}
+				document.write(showColor());
+			</script>
+		</div>
+	</body>
+</html>
