@@ -27,7 +27,7 @@ class SimFile {
 	 * 把文件读入数组（一行为一个元素）
 	 * 1.去掉每行末的换行符。
 	 * 2.可以设置是否过滤空行。
-	 * 
+	 *
 	 * @access public
 	 * @param string $filename
 	 * @param boolean $skip_empty_lines 是否过滤空行
@@ -115,26 +115,29 @@ class SimFile {
 	}
 	
 	/**
-	 * 递归删除目录及所有子目录和文件
-	 * 1.判断目录是否存在，存在进行删除。
-	 * 2.递归删除目录及止内所有文件和文件夹
+	 * 删除目录和文件
+	 * 1.可以删除文件和目录
+	 * 2.判断目录和文件是否存在，存在进行删除。
+	 * 3.递归删除目录及止内所有文件和文件夹
 	 *
 	 * @access public
-	 * @param string $dirname
+	 * @param string $filename
 	 */
-	public static function delDir($dirname) {
-		$dirname = rtrim($dirname, '/\\');
-		if (is_dir($dirname)) {
-			if (($dh = @opendir($dirname)) !== false) {
+	public static function delete($filename) {
+		$filename = rtrim($filename, '/\\');
+		if (is_dir($filename)) {
+			if (($dh = @opendir($filename)) !== false) {
 				while (false !== ($file = readdir($dh))) {
 					if ($file != "." && $file != "..") {
-						$path = $dirname . DIRECTORY_SEPARATOR . $file;
-						is_dir($path) ? self::delDir($path) : @unlink($path);
+						$path = $filename . '/' . $file;
+						is_dir($path) ? self::delete($path) : @unlink($path);
 					}
 				}
 				closedir($dh);
 			}
-			rmdir($dirname);
+			rmdir($filename);
+		} else {
+			unlink($filename);
 		}
 	}
 	
