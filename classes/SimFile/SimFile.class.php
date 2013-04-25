@@ -24,6 +24,24 @@ class SimFile {
 	}
 	
 	/**
+	 * 把文件读入数组（一行为一个元素）
+	 * 1.去掉每行末的换行符。
+	 * 2.可以设置是否过滤空行。
+	 * 
+	 * @access public
+	 * @param string $filename
+	 * @param boolean $skip_empty_lines 是否过滤空行
+	 * @return array
+	 */
+	public static function file($filename, $skip_empty_lines = false) {
+		if ($skip_empty_lines) {
+			return file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		} else {
+			return file($filename, FILE_IGNORE_NEW_LINES);
+		}
+	}
+	
+	/**
 	 * 读取文件为字符串
 	 *
 	 * @access public
