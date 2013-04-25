@@ -67,7 +67,7 @@ class SimFile {
 	}
 	
 	/**
-	 * 读取文件为一个数组
+	 * 读取数组文件，返回一个数组
 	 *
 	 * @access public
 	 * @param string $filename
@@ -118,7 +118,7 @@ class SimFile {
 	 * 删除目录和文件
 	 * 1.可以删除文件和目录
 	 * 2.判断目录和文件是否存在，存在进行删除。
-	 * 3.递归删除目录及止内所有文件和文件夹
+	 * 3.递归删除目录及止内所有文件和文件夹。
 	 *
 	 * @access public
 	 * @param string $filename
@@ -223,6 +223,7 @@ class SimFile {
 	
 	/**
 	 * 递归列出目录下的所有子目录和文件
+	 * 返回以子目录为键，子目录下所有文件的数组为值的数组
 	 *
 	 * @access public
 	 * @param string $dirname
@@ -270,7 +271,7 @@ class SimFile {
 	}
 	
 	/**
-	 * 获取自动转换单位的文件大小值（四舍五入）
+	 * 自动转换文件大小值为合适的单位（四舍五入）
 	 *
 	 * @access public
 	 * @param float $byte
