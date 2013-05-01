@@ -340,3 +340,89 @@ function from62($num) {
 	}
 	return $dec;
 }
+
+/**
+ * 根据IP获取地址信息
+ * 使用淘宝IP地址库
+ * 成功返回如下数组（此IP是ping baidu.com的）：
+ * array(
+ * 'country' => '中国',
+ * 'country_id' => 'CN',
+ * 'area' => '华北',
+ * 'area_id' => '100000',
+ * 'region' => '北京市',
+ * 'region_id' => '110000',
+ * 'city' => '北京市',
+ * 'city_id' => '110000',
+ * 'county' => '',
+ * 'county_id' => '-1',
+ * 'isp' => '电信',
+ * 'isp_id' => '100017',
+ * 'ip' => '220.181.111.85'
+ * );
+ *
+ * @param string $ip
+ * @return array boolean 成功返回数组，失败返回FALSE。
+ */
+function get_address($ip) {
+	$taobao_ip = "http://ip.taobao.com/service/getIpInfo.php?ip=";
+	$data = json_decode(file_get_contents($taobao_ip . $ip));
+	if ($data->code == 0) {
+		$data = $data->data;
+		return (array)$data;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * 获取PHP错误类型
+ * 
+ * @param integer $code
+ * @return string
+ */
+function get_error_type($code) {
+	$types = array(
+			1 => 'E_ERROR',
+			2 => 'E_WARNING',
+			4 => 'E_PARSE',
+			8 => 'E_NOTICE',
+			16 => 'E_CORE_ERROR',
+			32 => 'E_CORE_WARNING',
+			64 => 'E_COMPILE_ERROR',
+			128 => 'E_COMPILE_WARNING',
+			256 => 'E_USER_ERROR',
+			512 => 'E_USER_WARNING',
+			1024 => 'E_USER_NOTICE',
+			2048 => 'E_STRICT',
+			4096 => 'E_RECOVERABLE_ERROR',
+			8192 => 'E_DEPRECATED',
+			16384 => 'E_USER_DEPRECATED' 
+	);
+	return isset($types[$code]) ? $types[$code] : $code;
+}
+
+/**
+ * 获取自动转换单位的文件大小值（四舍五入）
+ *
+ * @param float $byte
+ * @param integer $precision 精度
+ * @return string
+ */
+function get_auto_size($byte, $precision = 2) {
+	$kb = 1024;
+	$mb = $kb * 1024;
+	$gb = $mb * 1024;
+	$tb = $gb * 1024;
+	if ($byte < $kb) {
+		return $byte . ' B';
+	} elseif ($byte < $mb) {
+		return round($byte / $kb, $precision) . ' KB';
+	} elseif ($byte < $gb) {
+		return round($byte / $mb, $precision) . ' MB';
+	} elseif ($byte < $tb) {
+		return round($byte / $gb, $precision) . ' GB';
+	} else {
+		return round($byte / $tb, $precision) . ' TB';
+	}
+}
