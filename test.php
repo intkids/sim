@@ -3,4 +3,6 @@ error_reporting(E_ALL);
 header('Content-type:text/html;charset=utf-8');
 require 'functions/common.func.php';
 
-var_dump(get_rand_string(6,1));
+$token = token_get_all(file_get_contents('classes/SimUpload/SimUpload.class.php'));
+
+var_dump($token);

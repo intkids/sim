@@ -379,24 +379,6 @@ class SimUpload {
 	}
 	
 	/**
-	 * 调试
-	 *
-	 * @ignore 调试用，可忽略
-	 */
-	private function debug() {
-		echo '$this_succs:';
-		var_dump($this->succs);
-		echo '<hr>$this_errors:';
-		var_dump($this->errors);
-		echo '<hr>$this_files:';
-		var_dump($this->files);
-		echo '<hr>$_FILES:';
-		var_dump($_FILES);
-		echo '<hr>$this_ini:';
-		var_dump($this->ini);
-	}
-	
-	/**
 	 * 析构函数
 	 */
 	public function __destruct() {

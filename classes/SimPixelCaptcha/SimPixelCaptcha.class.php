@@ -89,14 +89,14 @@ class SimPixelCaptcha {
 	 *
 	 * @var number
 	 */
-	private $width = 0;
+	private $width;
 	
 	/**
 	 * 图像高度
 	 *
 	 * @var number
 	 */
-	private $height = 0;
+	private $height;
 	
 	/**
 	 * 前景色
@@ -259,3 +259,4 @@ class SimPixelCaptcha {
  
  
  // End of file SimPixelCaptcha.class.php
+ 
